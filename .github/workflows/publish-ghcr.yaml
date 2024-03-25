@@ -1,0 +1,21 @@
+name: Docker Image CI for GHCR
+
+on:
+  push:
+    branches:
+      - master  # Adjust the branch as needed
+
+jobs:
+  build_and_publish:
+    runs_on: ubuntu-latest  # Use 'ubuntu-latest' instead of 'alpine-latest'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GH_PAT }}" | docker login ghcr.io -u chromecruzer --password-stdin
+      
+      - name: Build and push the image
+        run: |
+          docker build . -t ghcr.io/chromecruzer/test-ghcr:latest
+          docker push ghcr.io/chromecruzer/test-ghcr:latest
