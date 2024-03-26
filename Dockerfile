@@ -1,13 +1,14 @@
 FROM alpine:latest
 
+RUN apk add --no-cache bash
 # Set the working directory
-WORKDIR /gPak
+WORKDIR /app
 
 # Copy the entrypoint script into the container
-COPY entrypoint.sh /gPak/entrypoint.sh
+COPY entrypoint.sh .
 
 # Give execute permissions to the entrypoint script
-RUN chmod +x /gPak/entrypoint.sh
+RUN chmod +x entrypoint.sh
 
 # Set the entrypoint of the container
-ENTRYPOINT ["/gPak/entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]
